@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laboratorio 16 - DOM</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .oscuro {
+      background: #222;
+      color: white;
+    }
+    .mover {
+      animation: horizontal 2s forwards;
+    }
+    @keyframes horizontal {
+      from { transform: translateX(0); }
+      to { transform: translateX(200px); }
+    }
+    .thumbs img {
+      width: 80px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+    table, td, th {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 6px;
+    }
+  </style>
+</head>
+<body>
+<h1>Laboratorio 16 - DOM</h1>
+
+<!-- Ej 1 y Ej 2 -->
+<section>
+  <h2>Ej 1 y Ej 2</h2>
+  <p id="p1">Texto original</p>
+  <button id="btn-toggle-text">Cambiar texto</button>
+</section>
+<hr>
+
+<!-- Ej 3 -->
+<section>
+  <h2>Ej 3</h2>
+  <button id="btn-dark">Modo oscuro</button>
+</section>
+<hr>
+
+<!-- Ej 4 -->
+<section>
+  <h2>Ej 4</h2>
+  <button id="btn-sum">+</button>
+  <button id="btn-rest">−</button>
+  <span id="contador">0</span>
+  <p id="msg"></p>
+</section>
+<hr>
+
+<!-- Ej 5 -->
+<section>
+  <h2>Ej 5</h2>
+  <input type="text" id="input-li" placeholder="Texto"> 
+  <button id="btn-add-li">Agregar</button>
+  <button id="btn-del-li">Eliminar último</button>
+  <ul id="lista"></ul>
+</section>
+<hr>
+
+<!-- Ej 6 -->
+<section>
+  <h2>Ej 6</h2>
+  <form id="form-val">
+    <input type="text" id="nombre" placeholder="Nombre"><br>
+    <input type="email" id="correo" placeholder="Correo"><br>
+    <button type="submit">Enviar</button>
+  </form>
+</section>
+<hr>
+
+<!-- Ej 7 -->
+<section>
+  <h2>Ej 7</h2>
+  <div>
+    <img id="img-grande" src="https://picsum.photos/400" width="300">
+  </div>
+  <div class="thumbs">
+    <img src="https://picsum.photos/401">
+    <img src="https://picsum.photos/402">
+    <img src="https://picsum.photos/403">
+  </div>
+</section>
+<hr>
+
+<!-- Ej 8 -->
+<section>
+  <h2>Ej 8</h2>
+  <button id="btn-tabla">Generar tabla</button>
+  <div id="tabla-contenedor"></div>
+</section>
+<hr>
+
+<!-- Ej 9 -->
+<section>
+  <h2>Ej 9</h2>
+  <ul id="lista-del"></ul>
+</section>
+<hr>
+
+<!-- Ej 10 -->
+<section>
+  <h2>Ej 10</h2>
+  <button id="btn-mover">Mover</button>
+  <button id="btn-reset">Reiniciar</button>
+  <div id="cuadro" style="width:50px;height:50px;background:red;margin-top:10px;"></div>
+</section>
+<hr>
+
+<!-- Ej 11  -->
+<section>
+  <h2>Ej 11</h2>
+  <form id="form-crud">
+    <input id="crud-nombre" placeholder="Nombre">
+    <input id="crud-edad" type="number" placeholder="Edad">
+    <button type="submit">Agregar</button>
+  </form>
+  <table>
+    <thead>
+      <tr><th>Nombre</th><th>Edad</th><th>Acciones</th></tr>
+    </thead>
+    <tbody id="crud-body"></tbody>
+  </table>
+</section>
+<hr>
+
+<!-- Ej 12-->
+<section>
+  <h2>Ej 12</h2>
+  <pre id="json1"></pre>
+</section>
+<hr>
+
+<!-- Ej 13 -->
+<section>
+  <h2>Ej 13</h2>
+  <p id="json2"></p>
+</section>
+<hr>
+
+<!-- Ej 14 -->
+<section>
+  <h2>Ej 14</h2>
+  <ul id="json-list"></ul>
+</section>
+<hr>
+
+<!-- Ej 15-->
+<section>
+  <h2>Ej 15</h2>
+  <pre id="ls1"></pre>
+</section>
+<hr>
+
+<!-- Ej 16 -->
+<section>
+  <h2>Ej 16</h2>
+  <div id="tabla-libros"></div>
+</section>
+<hr>
+
+<!-- Ej 17  -->
+<section>
+  <h2>Ej 17</h2>
+  <pre id="json-mod"></pre>
+</section>
+<hr>
+
+<!-- Ej 18 -->
+<section>
+  <h2>Ej 18</h2>
+  <input id="name-json" placeholder="Tu nombre">
+  <button id="btn-name-json">Guardar</button>
+</section>
+<hr>
+
+<!-- Ej 19-->
+<section>
+  <h2>Ej 19</h2>
+  <ul id="tareas"></ul>
+</section>
+<hr>
+
+<!-- Ej 20 -->
+<section>
+  <h2>Ej 20</h2>
+  <form id="form-perfil">
+    <input id="p-nombre" placeholder="Nombre">
+    <input id="p-edad" type="number" placeholder="Edad">
+    <input id="p-pais" placeholder="País">
+    <button type="submit">Guardar</button>
+  </form>
+  <div id="perfil"></div>
+</section>
+<hr>
+
+<script>
+// Ej 1 y Ej 2
+const p1 = document.getElementById('p1');
+const btnToggle = document.getElementById('btn-toggle-text');
+btnToggle.onclick = () => {
+  p1.textContent = p1.textContent === 'Texto original' ? 'Texto cambiado' : 'Texto original';
+};
+
+// Ej 3
+const btnDark = document.getElementById('btn-dark');
+btnDark.onclick = () => document.body.classList.toggle('oscuro');
+
+// Ej 4
+let valor = 0;
+const contador = document.getElementById('contador');
+const msg = document.getElementById('msg');
+document.getElementById('btn-sum').onclick = () => {
+  valor++;
+  contador.textContent = valor;
+  msg.textContent = '';
+};
+document.getElementById('btn-rest').onclick = () => {
+  if (valor === 0) {
+    msg.textContent = 'No puede bajar de 0';
+    return;
+  }
+  valor--;
+  contador.textContent = valor;
+};
+
+// Ej 5
+const lista = document.getElementById('lista');
+document.getElementById('btn-add-li').onclick = () => {
+  const t = document.getElementById('input-li').value;
+  if (!t) return;
+  const li = document.createElement('li');
+  li.textContent = t;
+  lista.appendChild(li);
+};
+document.getElementById('btn-del-li').onclick = () => {
+  if (lista.lastChild) lista.removeChild(lista.lastChild);
+};
+
+// Ej 6
+const formVal = document.getElementById('form-val');
+formVal.onsubmit = e => {
+  e.preventDefault();
+  document.querySelectorAll('.error').forEach(e => e.remove());
+  const nombre = document.getElementById('nombre');
+  const correo = document.getElementById('correo');
+  if (!nombre.value) {
+    const s = document.createElement('span');
+    s.textContent = 'Campo obligatorio';
+    s.className = 'error';
+    nombre.insertAdjacentElement('afterend', s);
+  }
+  if (!correo.value) {
+    const s = document.createElement('span');
+    s.textContent = 'Campo obligatorio';
+    s.className = 'error';
+    correo.insertAdjacentElement('afterend', s);
+  }
+};
+
+// Ej 7
+document.querySelectorAll('.thumbs img').forEach(img => {
+  img.onclick = () => {
+    document.getElementById('img-grande').src = img.src;
+  };
+});
+
+// Ej 8
+const productos = [ {nombre:'Laptop',precio:3500}, {nombre:'Mouse',precio:80} ];
+document.getElementById('btn-tabla').onclick = () => {
+  const cont = document.getElementById('tabla-contenedor');
+  cont.innerHTML = '';
+  const table = document.createElement('table');
+  const tbody = document.createElement('tbody');
+  productos.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${p.nombre}</td><td>${p.precio}</td>`;
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  cont.appendChild(table);
+};
+
+// Ej 9
+const listaDel = document.getElementById('lista-del');
+['Uno','Dos','Tres'].forEach(t => {
+  const li = document.createElement('li');
+  li.textContent = t;
+  listaDel.appendChild(li);
+});
+listaDel.onclick = e => {
+  if (e.target.tagName === 'LI') e.target.remove();
+};
+
+// Ej 10
+const cuadro = document.getElementById('cuadro');
+document.getElementById('btn-mover').onclick = () => cuadro.classList.add('mover');
+document.getElementById('btn-reset').onclick = () => cuadro.classList.remove('mover');
+
+// Ej 11 CRUD
+const formCrud = document.getElementById('form-crud');
+const crudBody = document.getElementById('crud-body');
+formCrud.onsubmit = e => {
+  e.preventDefault();
+  const n = document.getElementById('crud-nombre').value;
+  const ed = document.getElementById('crud-edad').value;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${n}</td><td>${ed}</td><td><button class='edit'>Editar</button><button class='del'>Eliminar</button></td>`;
+  crudBody.appendChild(tr);
+};
+crudBody.onclick = e => {
+  if (e.target.classList.contains('del')) {
+    e.target.closest('tr').remove();
+  }
+  if (e.target.classList.contains('edit')) {
+    const tr = e.target.closest('tr');
+    const n = prompt('Nuevo nombre:', tr.children[0].textContent);
+    const ed = prompt('Nueva edad:', tr.children[1].textContent);
+    tr.children[0].textContent = n;
+    tr.children[1].textContent = ed;
+  }
+};
+
+// Ej 12
+const persona = {nombre:'Marco',edad:20,ciudad:'Arequipa'};
+document.getElementById('json1').textContent = JSON.stringify(persona);
+
+// Ej 13
+const cadena = '{"curso":"Web","horas":30}';
+const obj = JSON.parse(cadena);
+document.getElementById('json2').textContent = obj.curso;
+
+// Ej 14
+const prods = [
+  {nombre:'Teclado',precio:100},
+  {nombre:'Monitor',precio:600}
+];
+const jsonProds = JSON.stringify(prods);
+const objProds = JSON.parse(jsonProds);
+objProds.forEach(p => {
+  const li = document.createElement('li');
+  li.textContent = p.nombre;
+  document.getElementById('json-list').appendChild(li);
+});
+
+// Ej 15
+const us = {nombre:'Luis',correo:'luis@mail.com',rol:'admin'};
+localStorage.setItem('usuario', JSON.stringify(us));
+document.getElementById('ls1').textContent = localStorage.getItem('usuario');
+
+// Ej 16
+const librosJSON = '[{"titulo":"Libro A","autor":"Autor 1"},{"titulo":"Libro B","autor":"Autor 2"}]';
+const libros = JSON.parse(librosJSON);
+const divLib = document.getElementById('tabla-libros');
+const tLib = document.createElement('table');
+libros.forEach(l => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${l.titulo}</td><td>${l.autor}</td>`;
+  tLib.appendChild(tr);
+});
+divLib.appendChild(tLib);
+
+// Ej 17
+let persona2 = {nombre:'Ana',edad:25};
+persona2.edad = 30;
+document.getElementById('json-mod').textContent = JSON.stringify(persona2);
+
+// Ej 18
+document.getElementById('btn-name-json').onclick = () => {
+  const n = document.getElementById('name-json').value;
+  const obj = {nombre:n};
+  console.log(JSON.stringify(obj));
+};
+
+// Ej 19
+tareas = [
+  {titulo:'Estudiar',completada:true},
+  {titulo:'Comprar',completada:false},
+];
+tareas.forEach(t => {
+  const li = document.createElement('li');
+  li.textContent = t.titulo;
+  li.style.color = t.completada ? 'green' : 'red';
+  document.getElementById('tareas').appendChild(li);
+});
+
+// Ej 20
+const formPerfil = document.getElementById('form-perfil');
+const divPerfil = document.getElementById('perfil');
+
+function cargarPerfil() {
+  const dado = localStorage.getItem('perfil');
+  if (!dado) return;
+  const p = JSON.parse(dado);
+  divPerfil.innerHTML = `<p>${p.nombre}</p><p>${p.edad}</p><p>${p.pais}</p>`;
+}
+cargarPerfil();
+
+formPerfil.onsubmit = e => {
+  e.preventDefault();
+  const obj = {
+    nombre: document.getElementById('p-nombre').value,
+    edad: document.getElementById('p-edad').value,
+    pais: document.getElementById('p-pais').value,
+  };
+  localStorage.setItem('perfil', JSON.stringify(obj));
+  cargarPerfil();
+};
+</script>
+
+</body>
+</html>
